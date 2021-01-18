@@ -1,5 +1,6 @@
 package optimization.genetic;
 
+import optimization.genetic.listener.GenerationListener;
 import optimization.genetic.operator.GeneticOperator;
 import optimization.genetic.selection.SelectorFactory;
 import termination.TerminationCriterion;
@@ -15,6 +16,7 @@ public class GeneticAlgorithmBuilder<T> {
 	private int elitismSize;
 	private GeneticOperator<T> geneticOperator;
 	private TerminationCriterion<GeneticAlgorithm<T>> terminationCriterion;
+	private List<GenerationListener<T>> generationListeners;
 
 	public GeneticAlgorithmBuilder(List<T> population) {
 		PopulationValidator.validate(population);
@@ -61,9 +63,15 @@ public class GeneticAlgorithmBuilder<T> {
 		return this;
 	}
 
+	public GeneticAlgorithmBuilder<T> generationListeners(List<GenerationListener<T>> generationListeners) {
+		this.generationListeners = generationListeners;
+		return this;
+	}
+
 	public GeneticAlgorithm<T> build() {
 		return new SimpleGeneticAlgorithm<>(population,
 				isMinimization, fitnessFunction, selectorFactory,
-				crossoverFunction, elitismSize, geneticOperator, terminationCriterion);
+				crossoverFunction, elitismSize, geneticOperator, terminationCriterion,
+				generationListeners);
 	}
 }

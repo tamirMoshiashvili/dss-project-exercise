@@ -1,5 +1,6 @@
 package optimization.genetic;
 
+import optimization.genetic.listener.GenerationListener;
 import optimization.genetic.operator.GeneticOperator;
 import optimization.genetic.selection.Selector;
 import optimization.genetic.selection.SelectorFactory;
@@ -35,17 +36,30 @@ public interface GeneticAlgorithm<T> {
 
 	int getElitismSize();
 
+	List<GenerationListener<T>> getGenerationListeners();
+
 	default Selector<T> run() {
 		Selector<T> selector;
 
 		do {
+			notifyGenerationStarted();
 			Map<T, Float> fitnessScores = calculateFitnessScores();
 			selector = getSelectorFactory().create(fitnessScores, isMinimization());
 			setPopulation(createNewPopulation(selector));
+			notifyGenerationEnded(selector);
 			incrementGeneration();
 		} while (!getTerminationCriterion().isDone(this));
 
 		return selector;
+	}
+
+	private void notifyGenerationStarted() {
+		getGenerationListeners().forEach(GenerationListener::notifyGenerationStarted);
+	}
+
+	private void notifyGenerationEnded(Selector<T> selector) {
+		getGenerationListeners()
+				.forEach(generationListener -> generationListener.notifyGenerationEnded(this, selector));
 	}
 
 	private Map<T, Float> calculateFitnessScores() {
