@@ -1,10 +1,12 @@
 package optimization.genetic;
 
+import optimization.genetic.listener.GenerationListener;
 import optimization.genetic.operator.GeneticOperator;
 import optimization.genetic.selection.SelectorFactory;
 import termination.TerminationCriterion;
 
 import java.util.Collection;
+import java.util.List;
 
 public class SimpleGeneticAlgorithm<T> implements GeneticAlgorithm<T> {
 	private Collection<T> population;
@@ -16,11 +18,13 @@ public class SimpleGeneticAlgorithm<T> implements GeneticAlgorithm<T> {
 	private int elitismSize;
 	private GeneticOperator<T> geneticOperator;
 	private TerminationCriterion<GeneticAlgorithm<T>> terminationCriterion;
+	private List<GenerationListener<T>> generationListeners;
 
 	SimpleGeneticAlgorithm(Collection<T> population,
 						   boolean isMinimization, FitnessFunction<T> fitnessFunction, SelectorFactory<T> selectorFactory,
 						   CrossoverFunction<T> crossoverFunction, int elitismSize, GeneticOperator<T> geneticOperator,
-						   TerminationCriterion<GeneticAlgorithm<T>> terminationCriterion) {
+						   TerminationCriterion<GeneticAlgorithm<T>> terminationCriterion,
+						   List<GenerationListener<T>> generationListeners) {
 		this.population = population;
 		this.generation = 0;
 		this.isMinimization = isMinimization;
@@ -30,6 +34,7 @@ public class SimpleGeneticAlgorithm<T> implements GeneticAlgorithm<T> {
 		this.elitismSize = elitismSize;
 		this.geneticOperator = geneticOperator;
 		this.terminationCriterion = terminationCriterion;
+		this.generationListeners = generationListeners;
 	}
 
 	@Override
@@ -85,5 +90,10 @@ public class SimpleGeneticAlgorithm<T> implements GeneticAlgorithm<T> {
 	@Override
 	public int getElitismSize() {
 		return elitismSize;
+	}
+
+	@Override
+	public List<GenerationListener<T>> getGenerationListeners() {
+		return generationListeners;
 	}
 }
