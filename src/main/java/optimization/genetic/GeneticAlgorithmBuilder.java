@@ -17,6 +17,7 @@ public class GeneticAlgorithmBuilder<T> {
 	private TerminationCriterion<GeneticAlgorithm<T>> terminationCriterion;
 
 	public GeneticAlgorithmBuilder(List<T> population) {
+		PopulationValidator.validate(population);
 		this.population = population;
 	}
 
@@ -61,7 +62,7 @@ public class GeneticAlgorithmBuilder<T> {
 	}
 
 	public GeneticAlgorithm<T> build() {
-		return new SimpleGeneticAlgorithm<T>(population,
+		return new SimpleGeneticAlgorithm<>(population,
 				isMinimization, fitnessFunction, selectorFactory,
 				crossoverFunction, elitismSize, geneticOperator, terminationCriterion);
 	}
