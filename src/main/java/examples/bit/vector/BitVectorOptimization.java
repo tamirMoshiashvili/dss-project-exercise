@@ -2,11 +2,13 @@ package examples.bit.vector;
 
 import optimization.genetic.GeneticAlgorithm;
 import optimization.genetic.GeneticAlgorithmBuilder;
+import optimization.genetic.listener.StatisticsCollector;
 import optimization.genetic.operator.mutation.FixedRateMutation;
 import optimization.genetic.selection.Selector;
 import optimization.genetic.selection.roulette.wheel.RouletteWheelSelector;
 import termination.LimitedEpochsTerminationCriterion;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -20,6 +22,7 @@ public class BitVectorOptimization {
 				.elitismSize(1)
 				.geneticOperator(createStringMutation())
 				.terminationCriterion(new LimitedEpochsTerminationCriterion<>(5, GeneticAlgorithm::getGeneration))
+				.generationListeners(Collections.singletonList(new StatisticsCollector<>()))
 				.build().run();
 
 		result.getElitism(3).forEach(System.out::println);
