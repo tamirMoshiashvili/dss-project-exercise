@@ -1,4 +1,4 @@
-package examples.image.recreation.loss;
+package image.loss;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

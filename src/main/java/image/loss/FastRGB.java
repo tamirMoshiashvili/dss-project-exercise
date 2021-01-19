@@ -1,4 +1,4 @@
-package examples.image.recreation.loss;
+package image.loss;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
