@@ -12,13 +12,13 @@ import java.awt.image.BufferedImage;
 
 public class ShapeImageRecreationDrawer implements GenerationListener<ImageRecreation<ShapeSpecification>> {
 	private BufferedImage targetImage;
-	private JLabel generationLabel;
+	private JLabel generationDataLabel;
 	private ImageIcon imageIcon;
 	private JPanel predictedImagePanel;
 
 	public ShapeImageRecreationDrawer(BufferedImage targetImage) {
 		this.targetImage = targetImage;
-		this.generationLabel = new JLabel();
+		this.generationDataLabel = new JLabel();
 		this.imageIcon = new ImageIcon();
 		this.predictedImagePanel = createPredictedImagePanel();
 
@@ -33,7 +33,8 @@ public class ShapeImageRecreationDrawer implements GenerationListener<ImageRecre
 
 	private void initializeWindow() {
 		JFrame frame = new JFrame();
-		frame.setSize(new Dimension(50 + targetImage.getWidth(), 50 + targetImage.getHeight()));
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.setSize(new Dimension(50 + 2 * targetImage.getWidth(), 80 + targetImage.getHeight()));
 		frame.add(createMainPanel());
 		frame.setVisible(true);
 	}
@@ -52,7 +53,7 @@ public class ShapeImageRecreationDrawer implements GenerationListener<ImageRecre
 		JPanel generationPanel = new JPanel();
 		generationPanel.setLayout(new GridBagLayout());
 
-		generationPanel.add(generationLabel);
+		generationPanel.add(generationDataLabel);
 		return generationPanel;
 	}
 
@@ -80,14 +81,14 @@ public class ShapeImageRecreationDrawer implements GenerationListener<ImageRecre
 	public void notifyGenerationEnded(GeneticAlgorithm<ImageRecreation<ShapeSpecification>> geneticAlgorithm,
 									  Selector<ImageRecreation<ShapeSpecification>> selector) {
 		ImageRecreation<ShapeSpecification> imageRecreation = selector.getFittest();
-		System.out.println("num shapes: " + imageRecreation.getItems().size());
 		BufferedImage recreatedImage = imageRecreation.recreateImage(targetImage.getWidth(), targetImage.getHeight());
 
 		imageIcon.setImage(recreatedImage);
-		generationLabel.setText("Generation: " + geneticAlgorithm.getGeneration());
+		generationDataLabel.setText(String.format("Generation: %d | Num Shapes: %d",
+				geneticAlgorithm.getGeneration(), imageRecreation.getItems().size()));
 
 		repaint(predictedImagePanel);
-		repaint(generationLabel);
+		repaint(generationDataLabel);
 	}
 
 	private void repaint(JComponent component) {
