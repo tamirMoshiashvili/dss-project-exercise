@@ -1,4 +1,4 @@
-package examples.image.recreation.shape.genetic;
+package examples.shape.image.recreation.genetic;
 
 import image.recreation.ImageRecreation;
 import image.recreation.shape.ShapeSpecification;

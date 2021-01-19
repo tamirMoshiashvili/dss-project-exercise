@@ -1,6 +1,6 @@
-package examples.image.recreation.shape.genetic;
+package examples.shape.image.recreation.genetic;
 
-import examples.image.recreation.shape.utils.ShapeSpecificationGenerator;
+import examples.shape.image.recreation.utils.ShapeSpecificationGenerator;
 import image.recreation.ImageRecreation;
 import image.recreation.shape.ShapeImageRecreation;
 import image.recreation.shape.ShapeSpecification;
