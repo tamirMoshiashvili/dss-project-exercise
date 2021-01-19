@@ -20,7 +20,6 @@ import termination.LimitedTimeTerminationCriterion;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -44,7 +43,7 @@ public class ImageRecreationRunner {
 				.crossoverFunction(getCrossoverFunction(properties.getShapeConversionFunction()))
 				.elitismSize(properties.getElitismSize())
 				.geneticOperator(getMutation(properties))
-				.terminationCriterion(new LimitedTimeTerminationCriterion<>(Duration.ofMinutes(5)))
+				.terminationCriterion(new LimitedTimeTerminationCriterion<>(properties.getDuration()))
 				.generationListeners(List.of(new StatisticsCollector<>(), new ShapeImageRecreationDrawer(targetImage)))
 				.build();
 	}

@@ -10,17 +10,19 @@ import utils.ImageUtils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.time.Duration;
 import java.util.Properties;
 
 @Data
 class AppProperties {
 	private int populationSize;
 	private BufferedImage targetImage;
-	private int initialShapeSpecificationsSize;
 	private int elitismSize;
+	private double mutationRate;
+	private Duration duration;
+	private int initialShapeSpecificationsSize;
 	private int shapeSpecificationDelta;
 	private int shapeSpecificationThreshold;
-	private double mutationRate;
 	private ShapeConversionFunction<? extends Shape> shapeConversionFunction;
 
 	AppProperties() {
@@ -30,10 +32,16 @@ class AppProperties {
 		this.targetImage = ImageUtils.loadImage(properties.getProperty("image-recreation.target-image-path"));
 		this.elitismSize = Integer.parseInt(properties.getProperty("genetic-algorithm.elitism-size"));
 		this.mutationRate = Double.parseDouble(properties.getProperty("genetic-algorithm.mutation.rate"));
+		this.duration = getDurationFromDescription(properties.getProperty("genetic-algorithm.termination.time"));
+
 		this.initialShapeSpecificationsSize = Integer.parseInt(properties.getProperty("image-recreation.shape.specifications.initial-size"));
 		this.shapeSpecificationDelta = Integer.parseInt(properties.getProperty("image-recreation.shape.specifications.delta"));
 		this.shapeSpecificationThreshold = Integer.parseInt(properties.getProperty("image-recreation.shape.specifications.threshold"));
 		this.shapeConversionFunction = getShapeConversionFunctionOfShapeName(properties.getProperty("image-recreation.shape.conversion-function"));
+	}
+
+	private static Duration getDurationFromDescription(String timeLimit) {
+		return Duration.parse("PT" + timeLimit);
 	}
 
 	private static ShapeConversionFunction<? extends Shape> getShapeConversionFunctionOfShapeName(String shape) {
