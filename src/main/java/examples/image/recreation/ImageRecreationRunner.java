@@ -2,6 +2,7 @@ package examples.image.recreation;
 
 import examples.image.recreation.shape.genetic.AdditiveShapeSpecificationOperator;
 import examples.image.recreation.shape.genetic.ShapeImageRecreationCrossoverFunction;
+import examples.image.recreation.shape.genetic.ShapeImageRecreationDrawer;
 import image.recreation.ImageRecreation;
 import image.recreation.shape.ShapeImageRecreation;
 import image.recreation.shape.ShapeSpecification;
@@ -54,7 +55,7 @@ public class ImageRecreationRunner {
 				.elitismSize(elitismSize)
 				.geneticOperator(getMutation(width, height, delta, threshold, mutationRate, shapeConversionFunction))
 				.terminationCriterion(new LimitedTimeTerminationCriterion<>(Duration.ofMinutes(5)))
-				.generationListeners(List.of(new StatisticsCollector<>()))
+				.generationListeners(List.of(new StatisticsCollector<>(), new ShapeImageRecreationDrawer(targetImage)))
 				.build();
 	}
 
