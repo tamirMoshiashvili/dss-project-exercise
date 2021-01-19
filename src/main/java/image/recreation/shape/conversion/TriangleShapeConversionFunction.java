@@ -10,11 +10,13 @@ public class TriangleShapeConversionFunction implements ShapeConversionFunction<
 	public Polygon convert(ShapeSpecification shapeSpecification, int width, int height) {
 		Point2D.Float location = shapeSpecification.getLocation();
 		float scale = shapeSpecification.getScale();
+		float scaledWidth = scale * width;
+		float scaledHeight = scale * height;
 
 		Polygon triangle = new Polygon();
 		triangle.addPoint((int) location.getX(), (int) location.getY());
-		triangle.addPoint((int) (location.getX() * scale), (int) (location.getY() * scale));
-		triangle.addPoint((int) ((width - location.getX()) * scale), (int) ((height - location.getY()) * scale));
+		triangle.addPoint((int) (location.getX() - scaledWidth), (int) (location.getY() - scaledHeight));
+		triangle.addPoint((int) (location.getX() + scaledWidth), (int) (location.getY() - scaledHeight));
 		return triangle;
 	}
 }
