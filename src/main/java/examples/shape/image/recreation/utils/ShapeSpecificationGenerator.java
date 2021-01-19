@@ -1,4 +1,4 @@
-package examples.image.recreation.shape.utils;
+package examples.shape.image.recreation.utils;
 
 import image.recreation.shape.ShapeSpecification;
 

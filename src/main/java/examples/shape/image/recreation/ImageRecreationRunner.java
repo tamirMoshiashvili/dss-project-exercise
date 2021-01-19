@@ -1,8 +1,9 @@
-package examples.image.recreation;
+package examples.shape.image.recreation;
 
-import examples.image.recreation.shape.genetic.AdditiveShapeSpecificationOperator;
-import examples.image.recreation.shape.genetic.ShapeImageRecreationCrossoverFunction;
-import examples.image.recreation.shape.genetic.ShapeImageRecreationDrawer;
+import examples.shape.image.recreation.genetic.AdditiveShapeSpecificationOperator;
+import examples.shape.image.recreation.genetic.ShapeImageRecreationCrossoverFunction;
+import examples.shape.image.recreation.genetic.ShapeImageRecreationDrawer;
+import examples.shape.image.recreation.utils.ShapeSpecificationGenerator;
 import image.recreation.ImageRecreation;
 import image.recreation.shape.ShapeImageRecreation;
 import image.recreation.shape.ShapeSpecification;
@@ -26,7 +27,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static examples.image.recreation.shape.utils.ShapeSpecificationGenerator.createRandomShapeSpecifications;
 import static image.loss.BufferedImageMSE.calculateLoss;
 
 @Slf4j
@@ -62,7 +62,7 @@ public class ImageRecreationRunner {
 	private static List<ImageRecreation<ShapeSpecification>> createInitialPopulation(
 			int size, int width, int height, int initialSize, ShapeConversionFunction<? extends Shape> shapeConversionFunction) {
 		return Stream.generate(() ->
-				new ShapeImageRecreation<>(createRandomShapeSpecifications(width, height, initialSize), shapeConversionFunction))
+				new ShapeImageRecreation<>(ShapeSpecificationGenerator.createRandomShapeSpecifications(width, height, initialSize), shapeConversionFunction))
 				.limit(size)
 				.collect(Collectors.toList());
 	}
