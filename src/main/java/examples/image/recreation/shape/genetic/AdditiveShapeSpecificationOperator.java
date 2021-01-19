@@ -35,7 +35,7 @@ public class AdditiveShapeSpecificationOperator<T extends Shape> implements Gene
 
 	private List<ShapeSpecification> createNewShapeSpecifications(ImageRecreation<ShapeSpecification> shapeImageRecreation) {
 		List<ShapeSpecification> shapeSpecifications = new ArrayList<>(shapeImageRecreation.getItems());
-		if (shapeImageRecreation.getItems().size() < 100) {
+		if (shapeImageRecreation.getItems().size() <= 100 - delta) {
 			shapeSpecifications.addAll(ShapeSpecificationGenerator.createRandomShapeSpecifications(width, height, delta));
 		} else {
 			int index = random.nextInt(shapeSpecifications.size());
