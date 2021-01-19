@@ -8,6 +8,7 @@ import java.awt.geom.Ellipse2D;
 public class EllipseShapeConversionFunction implements ShapeConversionFunction<Ellipse2D.Float> {
 	@Override
 	public Ellipse2D.Float convert(ShapeSpecification shapeSpecification, int width, int height) {
+		height = width == height ? height / 2 : height;
 		float x = (float) shapeSpecification.getLocation().getX();
 		float y = (float) shapeSpecification.getLocation().getY();
 
