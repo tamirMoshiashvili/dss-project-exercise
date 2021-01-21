@@ -2,20 +2,22 @@ package examples.shape.image.recreation;
 
 import examples.shape.image.recreation.genetic.AdditiveShapeSpecificationOperator;
 import examples.shape.image.recreation.genetic.ShapeImageRecreationCrossoverFunction;
-import examples.shape.image.recreation.genetic.ShapeImageRecreationDrawer;
+import examples.shape.image.recreation.optimization.ShapeImageRecreationDrawer;
 import examples.shape.image.recreation.utils.ShapeSpecificationGenerator;
 import image.recreation.ImageRecreation;
 import image.recreation.shape.ShapeImageRecreation;
 import image.recreation.shape.ShapeSpecification;
 import image.recreation.shape.conversion.ShapeConversionFunction;
 import lombok.extern.slf4j.Slf4j;
-import optimization.genetic.CrossoverFunction;
-import optimization.genetic.GeneticAlgorithm;
-import optimization.genetic.GeneticAlgorithmBuilder;
-import optimization.genetic.listener.StatisticsCollector;
-import optimization.genetic.operator.GeneticOperator;
-import optimization.genetic.operator.mutation.FixedRateMutation;
-import optimization.genetic.selection.roulette.wheel.RouletteWheelSelector;
+import optimization.OptimizationAlgorithm;
+import optimization.Optimizer;
+import optimization.OptimizerBuilder;
+import optimization.algorithm.genetic.CrossoverFunction;
+import optimization.algorithm.genetic.GeneticAlgorithmBuilder;
+import optimization.algorithm.genetic.operator.GeneticOperator;
+import optimization.algorithm.genetic.operator.mutation.FixedRateMutation;
+import optimization.algorithm.genetic.selection.roulette.wheel.RouletteWheelSelector;
+import optimization.step.listener.StatisticsLogger;
 import termination.LimitedTimeTerminationCriterion;
 
 import java.awt.*;
@@ -30,21 +32,27 @@ import static image.loss.BufferedImageMSE.calculateLoss;
 public class ImageRecreationRunner {
 	public static void main(String[] args) {
 		AppProperties properties = new AppProperties();
-		createGeneticAlgorithm(properties).run();
+		createOptimizer(properties).optimize();
 	}
 
-	private static GeneticAlgorithm<ImageRecreation<ShapeSpecification>> createGeneticAlgorithm(AppProperties properties) {
+	private static Optimizer<ImageRecreation<ShapeSpecification>> createOptimizer(AppProperties properties) {
 		BufferedImage targetImage = properties.getTargetImage();
 
-		return new GeneticAlgorithmBuilder<>(createInitialPopulation(properties))
+		return new OptimizerBuilder<>(createInitialPopulation(properties))
 				.minimize()
-				.fitnessFunction(individual -> calculateLoss(targetImage, individual.recreateImage(targetImage.getWidth(), targetImage.getHeight())))
+				.evaluationFunction(individual -> calculateLoss(targetImage, individual.recreateImage(targetImage.getWidth(), targetImage.getHeight())))
+				.listeners(List.of(new StatisticsLogger<>(), new ShapeImageRecreationDrawer(targetImage)))
+				.terminationCriterion(new LimitedTimeTerminationCriterion<>(properties.getDuration()))
+				.optimizationAlgorithm(createOptimizationAlgorithm(properties))
+				.build();
+	}
+
+	private static OptimizationAlgorithm<ImageRecreation<ShapeSpecification>> createOptimizationAlgorithm(AppProperties properties) {
+		return new GeneticAlgorithmBuilder<ImageRecreation<ShapeSpecification>>()
 				.selectorFactory(RouletteWheelSelector::new)
 				.crossoverFunction(getCrossoverFunction(properties.getShapeConversionFunction()))
-				.elitismSize(properties.getElitismSize())
 				.geneticOperator(getMutation(properties))
-				.terminationCriterion(new LimitedTimeTerminationCriterion<>(properties.getDuration()))
-				.generationListeners(List.of(new StatisticsCollector<>(), new ShapeImageRecreationDrawer(targetImage)))
+				.elitismSize(properties.getElitismSize())
 				.build();
 	}
 

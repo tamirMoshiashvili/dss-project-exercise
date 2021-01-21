@@ -1,11 +1,11 @@
 image-recreation:
-  target-image-path: images\\mona-lisa-1.png
+  target-image-path: images\\mona-lisa-2.png
   shape:
     specifications:
       initial-size: 1
       delta: 1
       threshold: 100
-    conversion-function: ellipse
+    conversion-function: triangle
 
 genetic-algorithm:
   population-size: 32
