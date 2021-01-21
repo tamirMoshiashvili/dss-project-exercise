@@ -1,41 +1,50 @@
 package config;
 
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Properties;
 
 public class ConfigurationLoader {
-	public static Properties load(String propertiesFileName) {
+	public static AppConfig load(String configFileName) {
 		try {
-			return tryLoadingApplicationProperties(propertiesFileName);
+			return tryLoadingConfigFile(configFileName);
 		} catch (IOException e) {
 			throw new RuntimeException("Failed loading properties", e);
 		}
 	}
 
-	private static Properties tryLoadingApplicationProperties(String propertiesFileName) throws IOException {
-		InputStream propertiesInputStream = getPropertiesFileInputStream(propertiesFileName);
+	private static AppConfig tryLoadingConfigFile(String propertiesFileName) throws IOException {
+		InputStream configInputStream = getConfigFileInputStream(propertiesFileName);
 
-		return loadApplicationProperties(propertiesInputStream);
+		return loadApplicationConfigurations(configInputStream);
 	}
 
-	private static InputStream getPropertiesFileInputStream(String propertiesFileName) throws FileNotFoundException {
-		InputStream propertiesInputStream = ConfigurationLoader.class.getClassLoader().getResourceAsStream(propertiesFileName);
-		validatePropertiesFileExists(propertiesFileName, propertiesInputStream);
+	private static InputStream getConfigFileInputStream(String configFileName) throws FileNotFoundException {
+		InputStream configInputStream = ConfigurationLoader.class.getClassLoader().getResourceAsStream(configFileName);
+		validateConfigFileExists(configFileName, configInputStream);
 
-		return propertiesInputStream;
+		return configInputStream;
 	}
 
-	private static void validatePropertiesFileExists(String propertiesFileName, InputStream propertiesInputStream) throws FileNotFoundException {
-		if (propertiesInputStream == null) {
-			throw new FileNotFoundException("Properties file not found: " + propertiesFileName);
+	private static void validateConfigFileExists(String configFileName, InputStream configInputStream) throws FileNotFoundException {
+		if (configInputStream == null) {
+			throw new FileNotFoundException("Config file not found: " + configFileName);
 		}
 	}
 
-	private static Properties loadApplicationProperties(InputStream propertiesInputStream) throws IOException {
-		Properties properties = new Properties();
-		properties.load(propertiesInputStream);
-		return properties;
+	private static AppConfig loadApplicationConfigurations(InputStream configInputStream) {
+		Yaml config = new Yaml(createYamlConstructor());
+
+		return config.loadAs(configInputStream, AppConfig.class);
+	}
+
+	private static Constructor createYamlConstructor() {
+		Constructor constructor = new Constructor();
+		constructor.setPropertyUtils(new HyphenSupportPropertyUtils());
+		constructor.getPropertyUtils().setSkipMissingProperties(true);
+		return constructor;
 	}
 }
