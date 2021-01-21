@@ -2,8 +2,8 @@ package examples.shape.image.recreation.genetic;
 
 import image.recreation.ImageRecreation;
 import image.recreation.shape.ShapeSpecification;
-import optimization.genetic.CrossoverFunction;
-import optimization.genetic.selection.Selector;
+import optimization.algorithm.genetic.CrossoverFunction;
+import optimization.algorithm.genetic.selection.Selector;
 
 import java.awt.*;
 import java.awt.geom.Point2D;

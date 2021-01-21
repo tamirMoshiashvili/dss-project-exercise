@@ -5,7 +5,7 @@ import image.recreation.ImageRecreation;
 import image.recreation.shape.ShapeImageRecreation;
 import image.recreation.shape.ShapeSpecification;
 import image.recreation.shape.conversion.ShapeConversionFunction;
-import optimization.genetic.operator.GeneticOperator;
+import optimization.algorithm.genetic.operator.GeneticOperator;
 
 import java.awt.*;
 import java.awt.geom.Point2D;

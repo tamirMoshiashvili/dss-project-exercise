@@ -26,7 +26,7 @@ public class FastRGB {
 		return height;
 	}
 
-	public Color getRGB(int x, int y) {
+	Color getRGB(int x, int y) {
 		int position = PIXEL_LEN * (y * width + x);
 		int abgr = ((int) pixels[position++] & MASK) << 24;
 		abgr += ((int) pixels[position++] & MASK) << 16;
