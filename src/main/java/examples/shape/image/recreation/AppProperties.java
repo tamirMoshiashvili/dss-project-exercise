@@ -1,6 +1,10 @@
 package examples.shape.image.recreation;
 
+import config.AppConfig;
 import config.ConfigurationLoader;
+import config.genetic.algorithm.GeneticAlgorithmConfig;
+import config.image.recreation.ImageRecreationConfig;
+import config.image.recreation.ShapeSpecificationConfig;
 import image.recreation.shape.conversion.CircleShapeConversionFunction;
 import image.recreation.shape.conversion.EllipseShapeConversionFunction;
 import image.recreation.shape.conversion.ShapeConversionFunction;
@@ -11,7 +15,6 @@ import utils.ImageUtils;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.time.Duration;
-import java.util.Properties;
 
 @Data
 class AppProperties {
@@ -26,18 +29,26 @@ class AppProperties {
 	private ShapeConversionFunction<? extends Shape> shapeConversionFunction;
 
 	AppProperties() {
-		Properties properties = ConfigurationLoader.load("shape-image-recreation.properties");
+		AppConfig config = ConfigurationLoader.load("application.yml");
 
-		this.populationSize = Integer.parseInt(properties.getProperty("genetic-algorithm.population-size"));
-		this.targetImage = ImageUtils.loadImage(properties.getProperty("image-recreation.target-image-path"));
-		this.elitismSize = Integer.parseInt(properties.getProperty("genetic-algorithm.elitism-size"));
-		this.mutationRate = Double.parseDouble(properties.getProperty("genetic-algorithm.mutation.rate"));
-		this.duration = getDurationFromDescription(properties.getProperty("genetic-algorithm.termination.time"));
+		initializeImageRecreationProperties(config.getImageRecreation());
+		initializeGeneticAlgorithmProperties(config.getGeneticAlgorithm());
+	}
 
-		this.initialShapeSpecificationsSize = Integer.parseInt(properties.getProperty("image-recreation.shape.specifications.initial-size"));
-		this.shapeSpecificationDelta = Integer.parseInt(properties.getProperty("image-recreation.shape.specifications.delta"));
-		this.shapeSpecificationThreshold = Integer.parseInt(properties.getProperty("image-recreation.shape.specifications.threshold"));
-		this.shapeConversionFunction = getShapeConversionFunctionOfShapeName(properties.getProperty("image-recreation.shape.conversion-function"));
+	private void initializeGeneticAlgorithmProperties(GeneticAlgorithmConfig gaConfig) {
+		this.populationSize = gaConfig.getPopulationSize();
+		this.elitismSize = gaConfig.getElitismSize();
+		this.mutationRate = gaConfig.getMutation().getRate();
+		this.duration = getDurationFromDescription(gaConfig.getTermination().getTime());
+	}
+
+	private void initializeImageRecreationProperties(ImageRecreationConfig irConfig) {
+		this.targetImage = ImageUtils.loadImage(irConfig.getTargetImagePath());
+		ShapeSpecificationConfig ssConfig = irConfig.getShape().getSpecifications();
+		this.initialShapeSpecificationsSize = ssConfig.getInitialSize();
+		this.shapeSpecificationDelta = ssConfig.getDelta();
+		this.shapeSpecificationThreshold = ssConfig.getThreshold();
+		this.shapeConversionFunction = getShapeConversionFunctionOfShapeName(irConfig.getShape().getConversionFunction());
 	}
 
 	private static Duration getDurationFromDescription(String timeLimit) {
