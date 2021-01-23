@@ -5,7 +5,7 @@ import java.time.Instant;
 import java.util.Objects;
 
 public class LimitedTimeTerminationCriterion<T> implements TerminationCriterion<T> {
-	private Duration timeDuration;
+	private final Duration timeDuration;
 	private Instant startTime;
 
 	public LimitedTimeTerminationCriterion(Duration timeDuration) {
