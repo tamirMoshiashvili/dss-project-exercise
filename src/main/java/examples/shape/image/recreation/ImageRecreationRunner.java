@@ -40,7 +40,7 @@ public class ImageRecreationRunner {
 
 		return new OptimizerBuilder<>(createInitialSolutions(properties))
 				.minimize()
-				.evaluationFunction(individual -> calculateLoss(targetImage, individual.recreateImage(targetImage.getWidth(), targetImage.getHeight())))
+				.evaluationFunction(solution -> calculateLoss(targetImage, solution.recreateImage(targetImage.getWidth(), targetImage.getHeight())))
 				.listeners(List.of(new StatisticsLogger<>(), new ShapeImageRecreationDrawer(targetImage)))
 				.terminationCriterion(new LimitedTimeTerminationCriterion<>(properties.getDuration()))
 				.optimizationAlgorithm(createOptimizationAlgorithm(properties))
