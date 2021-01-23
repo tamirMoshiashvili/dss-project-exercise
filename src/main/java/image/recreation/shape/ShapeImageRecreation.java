@@ -44,6 +44,6 @@ public class ShapeImageRecreation<T extends Shape> implements ImageRecreation<Sh
 
 	private AffineTransform createAffineTransform(ShapeSpecification shapeSpecification) {
 		Point2D.Float location = shapeSpecification.getLocation();
-		return AffineTransform.getRotateInstance(shapeSpecification.getOrientation(), location.getX(), location.getY());
+		return AffineTransform.getRotateInstance(Math.toRadians(shapeSpecification.getOrientation()), location.getX(), location.getY());
 	}
 }
