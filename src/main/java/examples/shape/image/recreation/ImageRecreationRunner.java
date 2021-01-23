@@ -61,7 +61,7 @@ public class ImageRecreationRunner {
 		int height = properties.getTargetImage().getHeight();
 		int initialSize = properties.getInitialShapeSpecificationsSize();
 		ShapeConversionFunction<? extends Shape> shapeConversionFunction = properties.getShapeConversionFunction();
-		int size = properties.getPopulationSize();
+		int size = properties.getSolutionsSize();
 
 		return Stream.generate(() ->
 				new ShapeImageRecreation<>(ShapeSpecificationGenerator.createRandomShapeSpecifications(width, height, initialSize), shapeConversionFunction))

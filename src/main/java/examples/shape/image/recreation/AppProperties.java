@@ -18,7 +18,7 @@ import java.time.Duration;
 
 @Data
 class AppProperties {
-	private int populationSize;
+	private int solutionsSize;
 	private BufferedImage targetImage;
 	private int elitismSize;
 	private double mutationRate;
@@ -36,7 +36,7 @@ class AppProperties {
 	}
 
 	private void initializeGeneticAlgorithmProperties(GeneticAlgorithmConfig gaConfig) {
-		this.populationSize = gaConfig.getPopulationSize();
+		this.solutionsSize = gaConfig.getPopulationSize();
 		this.elitismSize = gaConfig.getElitismSize();
 		this.mutationRate = gaConfig.getMutation().getRate();
 		this.duration = getDurationFromDescription(gaConfig.getTermination().getTime());
