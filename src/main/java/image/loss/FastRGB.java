@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 
-public class FastRGB {
+class FastRGB {
 	private static final int PIXEL_LEN = 4;
 	private static final int MASK = 0xff;
 

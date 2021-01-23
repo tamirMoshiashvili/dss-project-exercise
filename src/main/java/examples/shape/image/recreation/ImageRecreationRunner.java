@@ -29,7 +29,7 @@ import java.util.stream.Stream;
 import static image.loss.BufferedImageMSE.calculateLoss;
 
 @Slf4j
-public class ImageRecreationRunner {
+class ImageRecreationRunner {
 	public static void main(String[] args) {
 		AppProperties properties = new AppProperties();
 		createOptimizer(properties).optimize();
