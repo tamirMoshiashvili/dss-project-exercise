@@ -38,7 +38,7 @@ public class ImageRecreationRunner {
 	private static Optimizer<ImageRecreation<ShapeSpecification>> createOptimizer(AppProperties properties) {
 		BufferedImage targetImage = properties.getTargetImage();
 
-		return new OptimizerBuilder<>(createInitialPopulation(properties))
+		return new OptimizerBuilder<>(createInitialSolutions(properties))
 				.minimize()
 				.evaluationFunction(individual -> calculateLoss(targetImage, individual.recreateImage(targetImage.getWidth(), targetImage.getHeight())))
 				.listeners(List.of(new StatisticsLogger<>(), new ShapeImageRecreationDrawer(targetImage)))
@@ -56,7 +56,7 @@ public class ImageRecreationRunner {
 				.build();
 	}
 
-	private static List<ImageRecreation<ShapeSpecification>> createInitialPopulation(AppProperties properties) {
+	private static List<ImageRecreation<ShapeSpecification>> createInitialSolutions(AppProperties properties) {
 		int width = properties.getTargetImage().getWidth();
 		int height = properties.getTargetImage().getHeight();
 		int initialSize = properties.getInitialShapeSpecificationsSize();
