@@ -8,9 +8,9 @@ public class FastRGB {
 	private static final int PIXEL_LEN = 4;
 	private static final int MASK = 0xff;
 
-	private int width;
-	private int height;
-	private byte[] pixels;
+	private final int width;
+	private final int height;
+	private final byte[] pixels;
 
 	FastRGB(BufferedImage image) {
 		this.width = image.getWidth();
