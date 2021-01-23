@@ -54,7 +54,7 @@ public class AdditiveShapeSpecificationOperator<T extends Shape> implements Gene
 
 		shapeSpecification.setScale(shapeSpecification.getScale() + operator * 0.01f);
 		shapeSpecification.setOrientation(shapeSpecification.getOrientation() + operator * 5);
-		shapeSpecification.setColor(new Color(shapeSpecification.getColor().getRGB() + operator * 100, true));
+		shapeSpecification.setColor(new Color(shapeSpecification.getColor().getRGB() + operator * 10, true));
 
 		Point2D.Float location = shapeSpecification.getLocation();
 		location.setLocation(location.getX() + operator * 5, location.getY() + operator * 5);
