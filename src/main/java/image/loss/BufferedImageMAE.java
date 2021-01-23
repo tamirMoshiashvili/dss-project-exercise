@@ -3,8 +3,8 @@ package image.loss;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class BufferedImageMAE {
-	public static float calculateLoss(BufferedImage target, BufferedImage prediction) {
+class BufferedImageMAE {
+	static float calculateLoss(BufferedImage target, BufferedImage prediction) {
 		float absoluteSumError = getAbsoluteSumError(new FastRGB(target), new FastRGB(prediction));
 		int size = target.getWidth() * target.getHeight();
 
