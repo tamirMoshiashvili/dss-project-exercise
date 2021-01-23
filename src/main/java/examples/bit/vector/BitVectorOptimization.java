@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class BitVectorOptimization {
+class BitVectorOptimization {
 	public static void main(String[] args) {
 		OptimizationStepEvaluation<String> result = new OptimizerBuilder<>(List.of("000", "001", "100", "110", "011"))
 				.maximize()
