@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ShapeSpecificationGenerator {
-	private static Random random = new Random();
+	private static final Random random = new Random();
 
 	public static List<ShapeSpecification> createRandomShapeSpecifications(int width, int height, int initialSize) {
 		return Stream.generate(() -> createRandomShapeSpecification(width, height))

@@ -10,10 +10,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class ShapeImageRecreationDrawer implements OptimizationStepListener<ImageRecreation<ShapeSpecification>> {
-	private BufferedImage targetImage;
-	private JLabel generationDataLabel;
-	private ImageIcon imageIcon;
-	private JPanel predictedImagePanel;
+	private final BufferedImage targetImage;
+	private final JLabel generationDataLabel;
+	private final ImageIcon imageIcon;
+	private final JPanel predictedImagePanel;
 
 	public ShapeImageRecreationDrawer(BufferedImage targetImage) {
 		this.targetImage = targetImage;

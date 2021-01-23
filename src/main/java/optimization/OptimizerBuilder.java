@@ -7,7 +7,7 @@ import termination.TerminationCriterion;
 import java.util.Collection;
 
 public class OptimizerBuilder<T> {
-	private Collection<T> solutions;
+	private final Collection<T> solutions;
 	private boolean isMinimization;
 	private EvaluationFunction<T> evaluationFunction;
 	private OptimizationAlgorithm<T> optimizationAlgorithm;

@@ -4,10 +4,10 @@ import optimization.algorithm.genetic.operator.GeneticOperator;
 import optimization.algorithm.genetic.selection.SelectorFactory;
 
 public class SimpleGeneticAlgorithm<T> implements GeneticAlgorithm<T> {
-	private SelectorFactory<T> selectorFactory;
-	private CrossoverFunction<T> crossoverFunction;
-	private GeneticOperator<T> geneticOperator;
-	private int elitismSize;
+	private final SelectorFactory<T> selectorFactory;
+	private final CrossoverFunction<T> crossoverFunction;
+	private final GeneticOperator<T> geneticOperator;
+	private final int elitismSize;
 
 	SimpleGeneticAlgorithm(SelectorFactory<T> selectorFactory, CrossoverFunction<T> crossoverFunction,
 						   GeneticOperator<T> geneticOperator, int elitismSize) {

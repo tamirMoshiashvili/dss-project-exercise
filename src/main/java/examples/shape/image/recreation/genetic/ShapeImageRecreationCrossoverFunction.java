@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.function.Function;
 
 public class ShapeImageRecreationCrossoverFunction implements CrossoverFunction<ImageRecreation<ShapeSpecification>> {
-	private Function<List<ShapeSpecification>, ImageRecreation<ShapeSpecification>> factoryFunction;
+	private final Function<List<ShapeSpecification>, ImageRecreation<ShapeSpecification>> factoryFunction;
 
 	public ShapeImageRecreationCrossoverFunction(
 			Function<List<ShapeSpecification>, ImageRecreation<ShapeSpecification>> factoryFunction) {
