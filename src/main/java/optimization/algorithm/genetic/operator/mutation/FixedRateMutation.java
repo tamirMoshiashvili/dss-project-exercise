@@ -3,8 +3,8 @@ package optimization.algorithm.genetic.operator.mutation;
 import optimization.algorithm.genetic.operator.GeneticOperator;
 
 public class FixedRateMutation<T> implements Mutation<T> {
-	private double fixedMutationRate;
-	private GeneticOperator<T> mutationFunction;
+	private final double fixedMutationRate;
+	private final GeneticOperator<T> mutationFunction;
 
 	public FixedRateMutation(double fixedMutationRate, GeneticOperator<T> mutationFunction) {
 		validateMutationRateRange(fixedMutationRate);

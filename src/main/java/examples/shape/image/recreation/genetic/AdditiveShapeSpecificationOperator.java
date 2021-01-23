@@ -14,12 +14,12 @@ import java.util.List;
 import java.util.Random;
 
 public class AdditiveShapeSpecificationOperator<T extends Shape> implements GeneticOperator<ImageRecreation<ShapeSpecification>> {
-	private static Random random = new Random();
-	private int width;
-	private int height;
-	private int threshold;
-	private int delta;
-	private ShapeConversionFunction<T> shapeConversionFunction;
+	private static final Random random = new Random();
+	private final int width;
+	private final int height;
+	private final int threshold;
+	private final int delta;
+	private final ShapeConversionFunction<T> shapeConversionFunction;
 
 	public AdditiveShapeSpecificationOperator(int width, int height, int threshold, int delta,
 											  ShapeConversionFunction<T> shapeConversionFunction) {

@@ -6,7 +6,7 @@ import org.yaml.snakeyaml.introspector.PropertyUtils;
 import java.util.Arrays;
 import java.util.List;
 
-public class HyphenSupportPropertyUtils extends PropertyUtils {
+class HyphenSupportPropertyUtils extends PropertyUtils {
 	@Override
 	public Property getProperty(Class<?> type, String name) {
 		if (name.contains("-")) {

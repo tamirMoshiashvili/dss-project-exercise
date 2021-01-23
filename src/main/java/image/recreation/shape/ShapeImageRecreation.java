@@ -12,8 +12,8 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 public class ShapeImageRecreation<T extends Shape> implements ImageRecreation<ShapeSpecification> {
-	private List<ShapeSpecification> shapeSpecifications;
-	private ShapeConversionFunction<T> shapeConversionFunction;
+	private final List<ShapeSpecification> shapeSpecifications;
+	private final ShapeConversionFunction<T> shapeConversionFunction;
 
 	public ShapeImageRecreation(List<ShapeSpecification> shapeSpecifications,
 								ShapeConversionFunction<T> shapeConversionFunction) {

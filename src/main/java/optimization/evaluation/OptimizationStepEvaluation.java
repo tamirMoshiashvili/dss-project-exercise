@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @Getter
 public class OptimizationStepEvaluation<T> {
 	private int step;
-	private boolean isMinimization;
+	private final boolean isMinimization;
 	private Map<T, Float> evaluations;
 
 	public OptimizationStepEvaluation(boolean isMinimization) {

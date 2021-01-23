@@ -19,6 +19,7 @@ public class ShapeSpecification {
 		this.color = color;
 	}
 
+	@SuppressWarnings("MethodDoesntCallSuperMethod")
 	public ShapeSpecification clone() {
 		return new ShapeSpecification((Point2D.Float) location.clone(), orientation,
 				scale, new Color(color.getRGB(), true));

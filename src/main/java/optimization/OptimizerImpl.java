@@ -10,11 +10,11 @@ import java.util.Collection;
 @Getter
 public class OptimizerImpl<T> implements Optimizer<T> {
 	private Collection<T> solutions;
-	private boolean isMinimization;
-	private EvaluationFunction<T> evaluationFunction;
-	private OptimizationAlgorithm<T> optimizationAlgorithm;
-	private Collection<OptimizationStepListener<T>> listeners;
-	private TerminationCriterion<Optimizer<T>> terminationCriterion;
+	private final boolean isMinimization;
+	private final EvaluationFunction<T> evaluationFunction;
+	private final OptimizationAlgorithm<T> optimizationAlgorithm;
+	private final Collection<OptimizationStepListener<T>> listeners;
+	private final TerminationCriterion<Optimizer<T>> terminationCriterion;
 
 	OptimizerImpl(Collection<T> solutions, EvaluationFunction<T> evaluationFunction, boolean isMinimization,
 				  OptimizationAlgorithm<T> optimizationAlgorithm, Collection<OptimizationStepListener<T>> listeners,

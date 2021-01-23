@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Random;
 
 public class RouletteWheelSelector<T> implements Selector<T> {
-	private List<T> rouletteWheel;
-	private Random random;
+	private final List<T> rouletteWheel;
+	private final Random random;
 
 	public RouletteWheelSelector(Map<T, Float> fitnessScores, boolean isMinimization) {
 		this.rouletteWheel = RouletteWheelFactory.createRouletteWheel(isMinimization, fitnessScores);
