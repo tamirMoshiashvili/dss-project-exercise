@@ -7,10 +7,12 @@ image-recreation:
       threshold: 100
     conversion-function: triangle
 
+optimization:
+  solutions-size: 32
+  termination:
+    time: 5m
+
 genetic-algorithm:
-  population-size: 32
   mutation:
     rate: 0.5
   elitism-size: 4
-  termination:
-    time: 5m

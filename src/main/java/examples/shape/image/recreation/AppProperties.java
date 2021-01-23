@@ -5,6 +5,7 @@ import config.ConfigurationLoader;
 import config.genetic.algorithm.GeneticAlgorithmConfig;
 import config.image.recreation.ImageRecreationConfig;
 import config.image.recreation.ShapeSpecificationConfig;
+import config.optimization.OptimizationConfig;
 import image.recreation.shape.conversion.CircleShapeConversionFunction;
 import image.recreation.shape.conversion.EllipseShapeConversionFunction;
 import image.recreation.shape.conversion.ShapeConversionFunction;
@@ -18,28 +19,22 @@ import java.time.Duration;
 
 @Data
 class AppProperties {
-	private int populationSize;
 	private BufferedImage targetImage;
-	private int elitismSize;
-	private double mutationRate;
-	private Duration duration;
 	private int initialShapeSpecificationsSize;
 	private int shapeSpecificationDelta;
 	private int shapeSpecificationThreshold;
 	private ShapeConversionFunction<? extends Shape> shapeConversionFunction;
+	private int solutionsSize;
+	private Duration duration;
+	private double mutationRate;
+	private int elitismSize;
 
 	AppProperties() {
 		AppConfig config = ConfigurationLoader.load("application.yml");
 
 		initializeImageRecreationProperties(config.getImageRecreation());
+		initializeOptimizationProperties(config.getOptimization());
 		initializeGeneticAlgorithmProperties(config.getGeneticAlgorithm());
-	}
-
-	private void initializeGeneticAlgorithmProperties(GeneticAlgorithmConfig gaConfig) {
-		this.populationSize = gaConfig.getPopulationSize();
-		this.elitismSize = gaConfig.getElitismSize();
-		this.mutationRate = gaConfig.getMutation().getRate();
-		this.duration = getDurationFromDescription(gaConfig.getTermination().getTime());
 	}
 
 	private void initializeImageRecreationProperties(ImageRecreationConfig irConfig) {
@@ -49,10 +44,6 @@ class AppProperties {
 		this.shapeSpecificationDelta = ssConfig.getDelta();
 		this.shapeSpecificationThreshold = ssConfig.getThreshold();
 		this.shapeConversionFunction = getShapeConversionFunctionOfShapeName(irConfig.getShape().getConversionFunction());
-	}
-
-	private static Duration getDurationFromDescription(String timeLimit) {
-		return Duration.parse("PT" + timeLimit);
 	}
 
 	private static ShapeConversionFunction<? extends Shape> getShapeConversionFunctionOfShapeName(String shape) {
@@ -66,5 +57,19 @@ class AppProperties {
 				return new TriangleShapeConversionFunction();
 		}
 		throw new IllegalArgumentException("Given shape has no shape-conversion-function: " + shape);
+	}
+
+	private void initializeOptimizationProperties(OptimizationConfig optimizationConfig) {
+		this.solutionsSize = optimizationConfig.getSolutionsSize();
+		this.duration = getDurationFromDescription(optimizationConfig.getTermination().getTime());
+	}
+
+	private static Duration getDurationFromDescription(String timeLimit) {
+		return Duration.parse("PT" + timeLimit);
+	}
+
+	private void initializeGeneticAlgorithmProperties(GeneticAlgorithmConfig gaConfig) {
+		this.mutationRate = gaConfig.getMutation().getRate();
+		this.elitismSize = gaConfig.getElitismSize();
 	}
 }

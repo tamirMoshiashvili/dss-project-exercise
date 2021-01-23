@@ -38,9 +38,9 @@ public class ImageRecreationRunner {
 	private static Optimizer<ImageRecreation<ShapeSpecification>> createOptimizer(AppProperties properties) {
 		BufferedImage targetImage = properties.getTargetImage();
 
-		return new OptimizerBuilder<>(createInitialPopulation(properties))
+		return new OptimizerBuilder<>(createInitialSolutions(properties))
 				.minimize()
-				.evaluationFunction(individual -> calculateLoss(targetImage, individual.recreateImage(targetImage.getWidth(), targetImage.getHeight())))
+				.evaluationFunction(solution -> calculateLoss(targetImage, solution.recreateImage(targetImage.getWidth(), targetImage.getHeight())))
 				.listeners(List.of(new StatisticsLogger<>(), new ShapeImageRecreationDrawer(targetImage)))
 				.terminationCriterion(new LimitedTimeTerminationCriterion<>(properties.getDuration()))
 				.optimizationAlgorithm(createOptimizationAlgorithm(properties))
@@ -56,12 +56,12 @@ public class ImageRecreationRunner {
 				.build();
 	}
 
-	private static List<ImageRecreation<ShapeSpecification>> createInitialPopulation(AppProperties properties) {
+	private static List<ImageRecreation<ShapeSpecification>> createInitialSolutions(AppProperties properties) {
 		int width = properties.getTargetImage().getWidth();
 		int height = properties.getTargetImage().getHeight();
 		int initialSize = properties.getInitialShapeSpecificationsSize();
 		ShapeConversionFunction<? extends Shape> shapeConversionFunction = properties.getShapeConversionFunction();
-		int size = properties.getPopulationSize();
+		int size = properties.getSolutionsSize();
 
 		return Stream.generate(() ->
 				new ShapeImageRecreation<>(ShapeSpecificationGenerator.createRandomShapeSpecifications(width, height, initialSize), shapeConversionFunction))

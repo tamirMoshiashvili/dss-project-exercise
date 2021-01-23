@@ -1,4 +1,4 @@
-package config.genetic.algorithm;
+package config.optimization;
 
 import lombok.Data;
 
